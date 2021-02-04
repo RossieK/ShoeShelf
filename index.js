@@ -8,7 +8,7 @@ expressConfig(app);
 
 //Routes
 app.get('/', (req, res) => {
-    res.send("Hello there!").end();
+    res.render('home');
 });
 
 //Server initialization
