@@ -1,4 +1,5 @@
 const port = 5000;
+const routes = require('./routes');
 const express = require('express');
 const expressConfig = require('./config/express');
 
@@ -7,9 +8,7 @@ const app = express();
 expressConfig(app);
 
 //Routes
-app.get('/', (req, res) => {
-    res.render('home');
-});
+app.use(routes);
 
 //Server initialization
 app.listen(port, () => console.log(`Server listening on port ${port}...`));
