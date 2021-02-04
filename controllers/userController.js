@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const User = require('../models/User');
 
 const router = Router();
 
@@ -11,7 +12,9 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    res.send(req.body).end();
+    User.create({...req.body })
+        .then(createdUser => console.log(createdUser))
+        .catch(err => console.error(err));
 });
 
 router.get('/profile', (req, res) => {
