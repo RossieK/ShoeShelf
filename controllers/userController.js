@@ -27,13 +27,14 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
     const { email, fullName, password, rePassword } = req.body;
 
-    if (password.length < 3 || password != rePassword) {
-        res.redirect('/user/register');
+    if (!email || !fullName || !password || !rePassword || password.length < 3 || password != rePassword) {
+        res.render('register');
+        return;
     }
 
     userService.register({ email, fullName, password })
-        .then(async() => {
-            let token = await userService.login({ email, password });
+        .then(async(user) => {
+            let token = await userService.registerToken(user);
             res.cookie(cookie_name, token);
             res.redirect('/');
         })
