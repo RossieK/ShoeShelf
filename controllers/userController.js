@@ -14,7 +14,7 @@ router.post('/login', async(req, res) => {
     try {
         let token = await userService.login({ email, password });
         res.cookie(cookie_name, token);
-        res.redirect('/');
+        res.redirect('/shoes');
     } catch (error) {
         res.render('login');
     }
@@ -36,7 +36,7 @@ router.post('/register', (req, res) => {
         .then(async(user) => {
             let token = await userService.registerToken(user);
             res.cookie(cookie_name, token);
-            res.redirect('/');
+            res.redirect('/shoes');
         })
         .catch(err => {
             console.error(err);
