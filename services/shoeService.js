@@ -9,7 +9,17 @@ function getAll() {
     return Shoe.find().lean();
 }
 
+function getOne(id) {
+    return Shoe.findOne({ _id: id }).lean();
+}
+
+function deleteOne(id) {
+    return Shoe.deleteOne({ _id: id });
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    getOne,
+    deleteOne
 }

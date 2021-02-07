@@ -24,12 +24,23 @@ router.post('/create', (req, res) => {
         });
 });
 
-router.get('/edit', (req, res) => {
+router.get('/:id/edit', (req, res) => {
     res.render('edit', { title: 'Edit Page' })
 });
 
-router.get('/details', (req, res) => {
-    res.render('details', { title: 'Details Page' });
+router.get('/:id/details', (req, res) => {
+    shoeService.getOne(req.params.id)
+        .then(shoe => {
+            let buyersCount = shoe.buyers.length;
+            res.render('details', { title: 'Details Page', shoe, buyersCount });
+        })
+        .catch(err => console.error(err));
+});
+
+router.get('/:id/delete', (req, res) => {
+    shoeService.deleteOne(req.params.id)
+        .then(() => res.redirect('/shoes'))
+        .catch(err => console.error(err));
 });
 
 module.exports = router;
