@@ -4,7 +4,11 @@ const shoeService = require('../services/shoeService');
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.render('shoes', { title: 'Shoe Shelf' });
+    shoeService.getAll()
+        .then(shoes => {
+            res.render('shoes', { title: 'Shoe Shelf', shoes });
+        })
+        .catch(err => console.error(err));
 });
 
 router.get('/create', (req, res) => {

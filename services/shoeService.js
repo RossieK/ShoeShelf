@@ -5,6 +5,11 @@ function create(data, salesman) {
     return shoe.save();
 }
 
+function getAll() {
+    return Shoe.find().lean();
+}
+
 module.exports = {
-    create
+    create,
+    getAll
 }
