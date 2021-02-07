@@ -1,7 +1,7 @@
 <header>
     <nav>
         <ul>
-            {{#if isLogged}}
+            {{#if isAuthenticated}}
             <li>
                 <a href="">Create new offer</a>
             </li>
@@ -10,7 +10,7 @@
                     <img src="/sneakers.png" alt="">
                 </a>
             </li>
-            <li>Welcome, xxx@xx.xxx |
+            <li>Welcome, {{email}} |
                 <a href="">Logout</a>
             </li>
             {{else}}

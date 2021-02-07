@@ -40,8 +40,14 @@ function registerToken(user) {
     return token;
 }
 
+async function getOne(id) {
+    const user = await User.findOne({ _id: id });
+    return user;
+}
+
 module.exports = {
     register,
     login,
-    registerToken
+    registerToken,
+    getOne
 }

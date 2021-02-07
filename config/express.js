@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const handlebars = require('express-handlebars');
+const auth = require('../helpers/authMiddleware');
 
 module.exports = (app) => {
     //Handlebars
@@ -17,4 +18,7 @@ module.exports = (app) => {
 
     //Cookie parser
     app.use(cookieParser());
+
+    //Auth Middleware
+    app.use(auth());
 }
