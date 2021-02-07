@@ -44,6 +44,11 @@ router.post('/register', (req, res) => {
         });
 });
 
+router.get('/logout', (req, res) => {
+    res.clearCookie(cookie_name);
+    res.redirect('/');
+})
+
 router.get('/profile', (req, res) => {
     res.render('profile', { title: 'My profile' });
 });
