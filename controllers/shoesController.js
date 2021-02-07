@@ -25,7 +25,19 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/:id/edit', (req, res) => {
-    res.render('edit', { title: 'Edit Page' })
+    shoeService.getOne(req.params.id)
+        .then(shoe => {
+            res.render('edit', { title: 'Edit Page', shoe });
+        })
+        .catch(err => console.error(err));
+});
+
+router.post('/:id/edit', (req, res) => {
+    shoeService.updateOne(req.params.id, req.body)
+        .then(() => {
+            res.redirect(`/shoes/${req.params.id}/details`);
+        })
+        .catch(err => console.error(err));
 });
 
 router.get('/:id/details', (req, res) => {

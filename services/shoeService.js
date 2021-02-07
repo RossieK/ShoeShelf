@@ -17,9 +17,14 @@ function deleteOne(id) {
     return Shoe.deleteOne({ _id: id });
 }
 
+function updateOne(id, data) {
+    return Shoe.updateOne({ _id: id }, data);
+}
+
 module.exports = {
     create,
     getAll,
     getOne,
-    deleteOne
+    deleteOne,
+    updateOne
 }
