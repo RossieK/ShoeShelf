@@ -12,9 +12,18 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
+    const { email, fullName, password, rePassword } = {...req.body };
+
+    if (password.length < 3 || password !== rePassword) {
+        res.redirect('/user/register');
+    }
+
     userService.register(req.body)
         .then(() => res.redirect('/user/login'))
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            res.redirect('/user/register');
+        });
 });
 
 router.get('/profile', (req, res) => {
