@@ -1,4 +1,4 @@
-const port = 5000;
+const { port } = require('./config/config');
 const routes = require('./routes');
 const express = require('express');
 const expressConfig = require('./config/express');

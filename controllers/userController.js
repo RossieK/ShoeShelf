@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const User = require('../models/User');
+const userService = require('../services/userService');
 
 const router = Router();
 
@@ -12,8 +12,8 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    User.create({...req.body })
-        .then(createdUser => console.log(createdUser))
+    userService.register(req.body)
+        .then(() => res.redirect('/user/login'))
         .catch(err => console.error(err));
 });
 
