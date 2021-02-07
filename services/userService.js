@@ -35,7 +35,13 @@ async function login({ email, password }) {
     return token;
 }
 
+function registerToken(user) {
+    let token = jwt.sign({ _id: user._id }, secret);
+    return token;
+}
+
 module.exports = {
     register,
-    login
+    login,
+    registerToken
 }
