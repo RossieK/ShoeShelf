@@ -3,21 +3,22 @@
         <p class="message"></p>
         <form action="/shoes/create" method="POST">
             <div>
-                <input type="text" name="name" placeholder="Name...">
+                <input type="text" name="name" placeholder="Name..." value="{{oldInput.name}}">
             </div>
             <div>
-                <input type="text" name="price" placeholder="Price...">
+                <input type="text" name="price" placeholder="Price..." value="{{oldInput.price}}">
             </div>
             <div>
-                <input type="text" name="imageUrl" placeholder="Image url...">
+                <input type="text" name="imageUrl" placeholder="Image url..." value="{{oldInput.imageUrl}}">
             </div>
             <div>
-                <textarea name="description" placeholder="Give us some description about this offer..."></textarea>
+                <textarea name="description" placeholder="Give us some description about this offer...">{{oldInput.description}}</textarea>
             </div>
             <div>
-                <input type="text" name="brand" placeholder="Brand...">
+                <input type="text" name="brand" placeholder="Brand..." value="{{oldInput.brand}}">
             </div>
             <div>
+                  <p class="message">{{message}}</p>
                 <button>Create</button>
             </div>
         </form>

@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const shoeService = require('../services/shoeService');
+const shoeMiddlewareValidator = require('../helpers/shoeMiddlewareValidator');
+const formValidator = require('../helpers/formValidator');
 
 const router = Router();
 
@@ -15,7 +17,15 @@ router.get('/create', (req, res) => {
     res.render('create', { title: 'Create Course Page' });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', shoeMiddlewareValidator, (req, res) => {
+
+    const formValidations = formValidator(req);
+
+    if (!formValidations.isOk) {
+        res.render('create', formValidations.options);
+        return;
+    }
+
     shoeService.create(req.body, req.user._id)
         .then(() => res.redirect('/shoes'))
         .catch(err => {
@@ -32,7 +42,14 @@ router.get('/:id/edit', (req, res) => {
         .catch(err => console.error(err));
 });
 
-router.post('/:id/edit', (req, res) => {
+router.post('/:id/edit', shoeMiddlewareValidator, (req, res) => {
+    const formValidations = formValidator(req);
+
+    if (!formValidations.isOk) {
+        res.redirect('edit');
+        return;
+    }
+
     shoeService.updateOne(req.params.id, req.body)
         .then(() => {
             res.redirect(`/shoes/${req.params.id}/details`);
