@@ -23,12 +23,12 @@ async function login({ email, password }) {
     let user = await User.findOne({ email });
 
     if (!user) {
-        throw new Error('User not found...');
+        throw new Error('User not found');
     }
 
     let passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-        throw new Error('Incorrect password...');
+        throw new Error('Incorrect password');
     }
 
     let token = jwt.sign({ _id: user._id }, secret);

@@ -18,7 +18,7 @@ router.post('/login', async(req, res) => {
         res.cookie(cookie_name, token);
         res.redirect('/shoes');
     } catch (error) {
-        res.render('login');
+        res.render('login', { oldInput: {...req.body }, message: error.message });
     }
 });
 
