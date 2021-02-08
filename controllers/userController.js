@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const userService = require('../services/userService');
 const { cookie_name } = require('../config/config');
+const registerValidator = require('../helpers/registerMiddlewareValidator');
+const formValidator = require('../helpers/formValidator');
 
 const router = Router();
 
@@ -24,13 +26,16 @@ router.get('/register', (req, res) => {
     res.render('register', { title: 'Register Page' });
 });
 
-router.post('/register', (req, res) => {
-    const { email, fullName, password, rePassword } = req.body;
+router.post('/register', registerValidator, (req, res) => {
 
-    if (!email || !fullName || !password || !rePassword || password.length < 3 || password != rePassword) {
-        res.render('register');
+    const formValidations = formValidator(req);
+
+    if (!formValidations.isOk) {
+        res.render('register', formValidations.options);
         return;
     }
+
+    const { email, fullName, password, rePassword } = req.body;
 
     userService.register({ email, fullName, password })
         .then(async(user) => {
@@ -39,8 +44,7 @@ router.post('/register', (req, res) => {
             res.redirect('/shoes');
         })
         .catch(err => {
-            console.error(err);
-            res.redirect('/user/register');
+            res.render('register', { oldInput: {...req.body }, message: err.message });
         });
 });
 

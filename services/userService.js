@@ -9,7 +9,7 @@ async function register(data) {
     let foundUser = await User.findOne({ email });
 
     if (foundUser) {
-        throw new Error('The given email is already in use...');
+        throw new Error('The given email is already in use');
     }
 
     let salt = await bcrypt.genSalt(salt_rounds);
