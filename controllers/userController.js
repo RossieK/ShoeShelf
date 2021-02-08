@@ -4,14 +4,15 @@ const { cookie_name } = require('../config/config');
 const registerValidator = require('../helpers/registerMiddlewareValidator');
 const formValidator = require('../helpers/formValidator');
 const isAuthenticated = require('../helpers/isAuthenticated');
+const isGuest = require('../helpers/isGuest');
 
 const router = Router();
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest, (req, res) => {
     res.render('login', { title: 'Login Page' });
 });
 
-router.post('/login', async(req, res) => {
+router.post('/login', isGuest, async(req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -23,11 +24,11 @@ router.post('/login', async(req, res) => {
     }
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest, (req, res) => {
     res.render('register', { title: 'Register Page' });
 });
 
-router.post('/register', registerValidator, (req, res) => {
+router.post('/register', isGuest, registerValidator, (req, res) => {
 
     const formValidations = formValidator(req);
 
