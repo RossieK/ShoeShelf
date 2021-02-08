@@ -3,6 +3,7 @@ const userService = require('../services/userService');
 const { cookie_name } = require('../config/config');
 const registerValidator = require('../helpers/registerMiddlewareValidator');
 const formValidator = require('../helpers/formValidator');
+const isAuthenticated = require('../helpers/isAuthenticated');
 
 const router = Router();
 
@@ -48,12 +49,12 @@ router.post('/register', registerValidator, (req, res) => {
         });
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isAuthenticated, (req, res) => {
     res.clearCookie(cookie_name);
     res.redirect('/');
 })
 
-router.get('/profile', (req, res) => {
+router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profile', { title: 'My profile' });
 });
 
