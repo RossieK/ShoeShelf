@@ -60,8 +60,13 @@ router.post('/:id/edit', shoeMiddlewareValidator, (req, res) => {
 router.get('/:id/details', (req, res) => {
     shoeService.getOne(req.params.id)
         .then(shoe => {
+            let isSalesman = false;
+            if (req.user._id == shoe.salesman) {
+                isSalesman = true;
+            }
+
             let buyersCount = shoe.buyers.length;
-            res.render('details', { title: 'Details Page', shoe, buyersCount });
+            res.render('details', { title: 'Details Page', shoe, buyersCount, isSalesman });
         })
         .catch(err => console.error(err));
 });
