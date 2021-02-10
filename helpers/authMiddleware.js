@@ -13,9 +13,9 @@ module.exports = function() {
                         res.clearCookie(cookie_name);
                         next();
                     } else {
-                        req.user = decoded;
                         res.locals.isAuthenticated = true;
                         let user = await userService.getOne(decoded._id);
+                        req.user = user;
                         res.locals.email = user.email;
 
                         next();

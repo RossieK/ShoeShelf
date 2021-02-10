@@ -58,7 +58,7 @@ router.post('/:id/edit', shoeMiddlewareValidator, (req, res) => {
 });
 
 router.get('/:id/details', (req, res) => {
-    shoeService.getOne(req.params.id)
+    shoeService.getOneWithBuyers(req.params.id)
         .then(shoe => {
             let isSalesman = false;
             if (req.user._id == shoe.salesman) {
@@ -66,7 +66,15 @@ router.get('/:id/details', (req, res) => {
             }
 
             let buyersCount = shoe.buyers.length;
-            res.render('details', { title: 'Details Page', shoe, buyersCount, isSalesman });
+
+            let hasBought = false;
+            shoe.buyers.forEach(buyer => {
+                if (buyer.email == req.user.email) {
+                    hasBought = true;
+                }
+            });
+
+            res.render('details', { title: 'Details Page', shoe, buyersCount, isSalesman, hasBought });
         })
         .catch(err => console.error(err));
 });
@@ -74,6 +82,12 @@ router.get('/:id/details', (req, res) => {
 router.get('/:id/delete', (req, res) => {
     shoeService.deleteOne(req.params.id)
         .then(() => res.redirect('/shoes'))
+        .catch(err => console.error(err));
+});
+
+router.get('/:id/buy', (req, res) => {
+    shoeService.buyOne(req.params.id, req.user._id)
+        .then(() => res.redirect(`/shoes/${req.params.id}/details`))
         .catch(err => console.error(err));
 });
 

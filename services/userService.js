@@ -41,7 +41,7 @@ function registerToken(user) {
 }
 
 async function getOne(id) {
-    const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ _id: id }, { email: 1 }).lean();
     return user;
 }
 
