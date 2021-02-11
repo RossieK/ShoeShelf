@@ -8,14 +8,14 @@ const router = Router();
 router.get('/', (req, res) => {
     shoeService.getAll()
         .then(shoes => {
-            shoes.sort((a, b) => a.buyers.length - b.buyers.length);
+            shoes.sort((a, b) => b.buyers.length - a.buyers.length);
             res.render('shoes', { title: 'Shoe Shelf', shoes });
         })
         .catch(err => console.error(err));
 });
 
 router.get('/create', (req, res) => {
-    res.render('create', { title: 'Create Course Page' });
+    res.render('create', { title: 'Create Offer' });
 });
 
 router.post('/create', shoeMiddlewareValidator, (req, res) => {
@@ -23,7 +23,7 @@ router.post('/create', shoeMiddlewareValidator, (req, res) => {
     const formValidations = formValidator(req);
 
     if (!formValidations.isOk) {
-        res.render('create', formValidations.options);
+        res.render('create', {...formValidations.options, title: 'Create Offer' });
         return;
     }
 

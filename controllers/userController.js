@@ -21,7 +21,7 @@ router.post('/login', isGuest, async(req, res) => {
         res.cookie(cookie_name, token);
         res.redirect('/shoes');
     } catch (error) {
-        res.render('login', { oldInput: {...req.body }, message: error.message });
+        res.render('login', { oldInput: {...req.body }, message: error.message, title: 'Login Page' });
     }
 });
 
@@ -34,7 +34,7 @@ router.post('/register', isGuest, registerValidator, (req, res) => {
     const formValidations = formValidator(req);
 
     if (!formValidations.isOk) {
-        res.render('register', formValidations.options);
+        res.render('register', {...formValidations.options, title: 'Register Page' });
         return;
     }
 
@@ -47,13 +47,13 @@ router.post('/register', isGuest, registerValidator, (req, res) => {
             res.redirect('/shoes');
         })
         .catch(err => {
-            res.render('register', { oldInput: {...req.body }, message: err.message });
+            res.render('register', { oldInput: {...req.body }, message: err.message, title: 'Register Page' });
         });
 });
 
 router.get('/logout', isAuthenticated, (req, res) => {
     res.clearCookie(cookie_name);
-    res.redirect('/');
+    res.redirect('/user/login');
 })
 
 router.get('/profile', isAuthenticated, async(req, res) => {

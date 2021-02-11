@@ -36,7 +36,7 @@ function getOffersOfUser(userId) {
 }
 
 function getShoesOfUser(userId) {
-    return Shoe.find({ buyers: [userId] }).lean();
+    return Shoe.find({ buyers: { "$in": [userId] } }).lean();
 }
 
 module.exports = {
