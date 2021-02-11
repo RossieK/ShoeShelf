@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const userService = require('../services/userService');
+const shoeService = require('../services/shoeService');
 const { cookie_name } = require('../config/config');
 const registerValidator = require('../helpers/registerMiddlewareValidator');
 const formValidator = require('../helpers/formValidator');
@@ -55,8 +56,17 @@ router.get('/logout', isAuthenticated, (req, res) => {
     res.redirect('/');
 })
 
-router.get('/profile', isAuthenticated, (req, res) => {
-    res.render('profile', { title: 'My profile' });
+router.get('/profile', isAuthenticated, async(req, res) => {
+    let userOffers = await shoeService.getOffersOfUser(req.user._id);
+    let userOffersLength = userOffers.length;
+
+    let totalPrice = 0;
+    let userShoes = await shoeService.getShoesOfUser(req.user._id);
+    userShoes.forEach(shoe => {
+        totalPrice += Number(shoe.price);
+    });
+
+    res.render('profile', { title: 'My profile', userOffersLength, userShoes, totalPrice });
 });
 
 module.exports = router;

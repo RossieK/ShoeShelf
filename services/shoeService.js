@@ -31,6 +31,14 @@ async function buyOne(productId, userId) {
     return Shoe.updateOne({ _id: productId }, { buyers: shoe.buyers });
 }
 
+function getOffersOfUser(userId) {
+    return Shoe.find({ salesman: userId }).lean();
+}
+
+function getShoesOfUser(userId) {
+    return Shoe.find({ buyers: [userId] }).lean();
+}
+
 module.exports = {
     create,
     getAll,
@@ -38,5 +46,7 @@ module.exports = {
     getOneWithBuyers,
     deleteOne,
     updateOne,
-    buyOne
+    buyOne,
+    getOffersOfUser,
+    getShoesOfUser
 }
