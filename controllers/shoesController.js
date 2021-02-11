@@ -8,6 +8,7 @@ const router = Router();
 router.get('/', (req, res) => {
     shoeService.getAll()
         .then(shoes => {
+            shoes.sort((a, b) => a.buyers.length - b.buyers.length);
             res.render('shoes', { title: 'Shoe Shelf', shoes });
         })
         .catch(err => console.error(err));
@@ -60,8 +61,9 @@ router.post('/:id/edit', shoeMiddlewareValidator, (req, res) => {
 router.get('/:id/details', (req, res) => {
     shoeService.getOneWithBuyers(req.params.id)
         .then(shoe => {
+
             let isSalesman = false;
-            if (req.user._id == shoe.salesman) {
+            if (req.user.email == shoe.salesman.email) {
                 isSalesman = true;
             }
 

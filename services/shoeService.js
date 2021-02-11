@@ -14,7 +14,7 @@ function getOne(id) {
 }
 
 function getOneWithBuyers(id) {
-    return Shoe.findOne({ _id: id }).populate('buyers').lean();
+    return Shoe.findOne({ _id: id }).populate('buyers', { email: 1 }).populate('salesman', { email: 1 }).lean();
 }
 
 function deleteOne(id) {
